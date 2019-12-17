@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 function App() {
 
@@ -9,10 +9,14 @@ function App() {
     document.title = `click ${count}`
   }, [count])
 
+  const plus = useCallback(() => {
+    useCount((c) => c + 1)
+  }, [])
+
   return (
     <div>
       click count: {count}
-      <button onClick={() => useCount((c) => c + 1)}>Plus</button>
+      <button onClick={plus}>Plus</button>
     </div>
   )
 }
