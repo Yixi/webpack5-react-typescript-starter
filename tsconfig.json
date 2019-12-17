@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@root/*": ["src/*"]
     },
     "outDir": "./dist/",
     "sourceMap": true,
