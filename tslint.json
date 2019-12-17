@@ -5,6 +5,7 @@
     "tslint-react-hooks"
   ],
   "rules": {
+    "no-unused-variable": true,
     "jsx-no-multiline-js": false,
     "jsx-no-lambda": false,
     "jsx-alignment": false,

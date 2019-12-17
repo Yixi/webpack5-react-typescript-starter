@@ -1,5 +1,6 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const webpack = require('webpack')
 
@@ -32,6 +33,24 @@ module.exports = {
         }
       },
       {
+        test: /\.scss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                mode: 'global',
+                localIdentName: '[name]__[local]--[hash:base64:5]',
+              },
+              importLoaders: 2,
+            }
+          },
+          "postcss-loader",
+          'sass-loader',
+        ],
+      },
+      {
         test: /\.(jpe?g|png|gif|ogg|mp3)$/,
         use: ["url-loader"],
       },
@@ -58,6 +77,10 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       tsconfig: path.resolve(__dirname, "../tsconfig.json"),
       tslint: path.resolve(__dirname, "../tslint.json"),
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[hash:7].css",
+      chunkFilename: "[id].[hash:7].css"
     }),
     new HTMLWebpackPlugin({
       template: "../src/app.html",

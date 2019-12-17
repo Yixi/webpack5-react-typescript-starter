@@ -1,5 +1,9 @@
 import * as React from 'react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+
+const styles = require('./App.scss')
+
+console.log(styles)
 
 function App() {
 
@@ -14,7 +18,8 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div className={styles.container}>
+      <div className="ga">123</div>
       click count: {count}
       <button onClick={plus}>Plus</button>
     </div>
