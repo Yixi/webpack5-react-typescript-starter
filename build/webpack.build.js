@@ -2,7 +2,7 @@ const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const webpack = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const PORT = 4222
 const _HOST = '0.0.0.0'
@@ -18,7 +18,7 @@ module.exports = {
     publicPath: "/",
   },
   context: path.resolve(__dirname, "../src"),
-  devtool: "hidden-source-map",
+  devtool: "nosources-source-map",
   bail: true,
   mode: "production",
   module: {
@@ -46,7 +46,12 @@ module.exports = {
               importLoaders: 2,
             }
           },
-          "postcss-loader",
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: false,
+            },
+          },
           'sass-loader',
         ],
       },
@@ -78,6 +83,7 @@ module.exports = {
       tsconfig: path.resolve(__dirname, "../tsconfig.json"),
       tslint: path.resolve(__dirname, "../tslint.json"),
     }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].[hash:7].css",
       chunkFilename: "[id].[hash:7].css"
