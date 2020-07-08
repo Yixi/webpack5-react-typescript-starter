@@ -87,8 +87,9 @@ module.exports = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: path.resolve(__dirname, "../tsconfig.json"),
-      tslint: path.resolve(__dirname, "../tslint.json"),
+      typescript: {
+        configFile: path.resolve(__dirname, "../tsconfig.json"),
+      }
     }),
     new HTMLWebpackPlugin({
       template: "../src/app.html",
