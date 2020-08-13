@@ -6,10 +6,16 @@ pipeline {
 
   }
   stages {
-    stage('build') {
+    stage('Test') {
       steps {
         sh '''yarn install
 yarn test'''
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'yarn build'
       }
     }
 
