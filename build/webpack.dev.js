@@ -1,51 +1,54 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const webpack = require('webpack')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const PORT = 4222
-const _HOST = '0.0.0.0'
-const HOST = `http://${_HOST}`
-const URL = `${HOST}:${PORT}`
+const PUBLIC_PATH = ''
 
 module.exports = {
   entry: [
-    `webpack-dev-server/client?${URL}`,
-    'webpack/hot/only-dev-server',
     '../src/index.tsx'
   ],
   output: {
-    filename: "app.js",
-    path: path.join(__dirname, "../dist"),
-    publicPath: "/",
+    filename: 'app.js',
+    path: path.join(__dirname, '../dist'),
+    publicPath: '/',
   },
-  context: path.resolve(__dirname, "../src"),
-  devtool: "cheap-module-source-map",
+  context: path.resolve(__dirname, '../src'),
+  devtool: 'cheap-module-source-map',
   devServer: {
-    stats: {
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false,
-    },
-    hot: true,
-    // enable HMR on the server
-    compress: true,
-    contentBase: path.resolve(__dirname, '../src'),
-    // match the output path
     port: PORT,
-    host: _HOST,
-    publicPath: URL,
+    host: '0.0.0.0',
+    devMiddleware: {
+      stats: {
+        colors: true,
+        modules: false,
+        children: false,
+        chunks: false,
+        chunkModules: false,
+      },
+    },
+    static: {
+      publicPath: PUBLIC_PATH,
+    },
+    open: true,
+    hot: true,
+    compress: true,
     historyApiFallback: true,
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://api.cn',
+    //     changeOrigin: true,
+    //   },
+    // },
   },
-  mode: "development",
+  mode: 'development',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: {
-          loader: "ts-loader",
+          loader: 'ts-loader',
           options: {
             transpileOnly: true
           }
@@ -65,36 +68,31 @@ module.exports = {
               importLoaders: 2,
             }
           },
-          "postcss-loader",
+          'postcss-loader',
           'sass-loader',
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|ogg|mp3)$/,
-        use: ["url-loader"],
-      },
-      {
-        test: /\.(svg?)(\?[a-z0-9]+)?$/,
-        use: ["url-loader"],
+        test: /\.(jpe?g|png|gif|ogg|mp3|svg)$/,
+        type: 'asset'
       },
     ]
   },
   resolve: {
     alias: {
-      "@root": path.resolve(__dirname, "../src"),
+      '@root': path.resolve(__dirname, '../src'),
     },
-    extensions: [".ts", ".tsx", ".js", ".json"],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
       typescript: {
-        configFile: path.resolve(__dirname, "../tsconfig.json"),
+        configFile: path.resolve(__dirname, '../tsconfig.json'),
       }
     }),
     new HTMLWebpackPlugin({
-      template: "../src/app.html",
-      filename: "index.html",
+      template: '../src/app.html',
+      filename: 'index.html',
     }),
-    new webpack.HotModuleReplacementPlugin(),
   ]
 }

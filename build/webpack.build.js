@@ -1,32 +1,31 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-
-const PORT = 4222
-const _HOST = '0.0.0.0'
-const HOST = `http://${_HOST}`
-const URL = `${HOST}:${PORT}`
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: '../src/index.tsx',
   output: {
-    filename: "[name]-[hash:7].js",
-    path: path.resolve(__dirname, "../dist"),
-    chunkFilename: "[chunkhash].js",
-    publicPath: "/",
+    filename: '[name]-[hash:7].js',
+    path: path.resolve(__dirname, '../dist'),
+    chunkFilename: '[chunkhash].js',
+    publicPath: '',
   },
-  context: path.resolve(__dirname, "../src"),
-  devtool: "nosources-source-map",
+  context: path.resolve(__dirname, '../src'),
   bail: true,
-  mode: "production",
+  mode: 'production',
+  optimization: {
+    splitChunks: {
+      maxSize: 300000
+    }
+  },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: {
-          loader: "ts-loader",
+          loader: 'ts-loader',
           options: {
             transpileOnly: true
           }
@@ -56,20 +55,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|ogg|mp3)$/,
-        use: ["url-loader"],
-      },
-      {
-        test: /\.(svg?)(\?[a-z0-9]+)?$/,
-        use: ["url-loader"],
+        test: /\.(jpe?g|png|gif|ogg|mp3|svg)$/,
+        type: 'asset'
       },
     ]
   },
   resolve: {
     alias: {
-      "@root": path.resolve(__dirname, "../src"),
+      '@root': path.resolve(__dirname, '../src'),
     },
-    extensions: [".ts", ".tsx", ".js", ".json"],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   stats: {
     cached: true,
@@ -81,17 +76,17 @@ module.exports = {
   plugins: [
     new ForkTsCheckerWebpackPlugin({
       typescript: {
-        configFile: path.resolve(__dirname, "../tsconfig.json"),
+        configFile: path.resolve(__dirname, '../tsconfig.json'),
       }
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].[hash:7].css",
-      chunkFilename: "[id].[hash:7].css"
+      filename: '[name].[hash:7].css',
+      chunkFilename: '[id].[hash:7].css'
     }),
     new HTMLWebpackPlugin({
-      template: "../src/app.html",
-      filename: "index.html",
+      template: '../src/app.html',
+      filename: 'index.html',
     }),
   ]
 }

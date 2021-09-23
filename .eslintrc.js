@@ -25,10 +25,6 @@ module.exports = {
       'error',
       2
     ],
-    'linebreak-style': [
-      'error',
-      'unix'
-    ],
     'quotes': [
       'error',
       'single'
@@ -37,6 +33,8 @@ module.exports = {
       'error',
       'never'
     ],
-    'object-curly-spacing': ['error', 'always']
+    'object-curly-spacing': ['error', 'always'],
+    'react/prop-types': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0
   }
 }
