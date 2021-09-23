@@ -11,12 +11,12 @@ Object {
           class="active"
           href="/"
         >
-          首页
+          Home
         </a>
         <a
           href="/about"
         >
-          关于
+          About
         </a>
       </div>
     </div>
@@ -28,12 +28,12 @@ Object {
         class="active"
         href="/"
       >
-        首页
+        Home
       </a>
       <a
         href="/about"
       >
-        关于
+        About
       </a>
     </div>
   </div>,
