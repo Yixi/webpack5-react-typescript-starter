@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { RecoilRoot } from 'recoil'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import styles from './App.scss'
 import Header from '@root/components/Header'
 import About from '@root/pages/About'
@@ -12,10 +12,10 @@ const App: React.FC = () => {
       <Router>
         <Header/>
         <div className={styles.content}>
-          <Switch>
-            <Route path='/about'><About/></Route>
-            <Route path='/'><Home/></Route>
-          </Switch>
+          <Routes>
+            <Route path="/about" element={<About/>}/>
+            <Route path="/" element={<Home/>}/>
+          </Routes>
         </div>
       </Router>
     </RecoilRoot>
